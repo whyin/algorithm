@@ -1,2 +1,1 @@
-a, b, c = map(int, input().split())
-print(a+b+c)
+print(sum(list(map(int, input().split()))))
