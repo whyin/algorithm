@@ -1,16 +1,18 @@
 class Solution {
     public int[] solution(String[] keyinput, int[] board) {
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
+
         int maxX = board[0] / 2;
         int maxY = board[1] / 2;
 
         for (String key : keyinput) {
-            switch (key) {
+            switch (key){
                 case "up":
                     if (y + 1 <= maxY) y++;
                     break;
                 case "down":
-                    if (y - 1 >= -maxY) y--;
+                    if (y - 1 >= -maxY ) y--;
                     break;
                 case "left":
                     if (x - 1 >= -maxX) x--;
@@ -20,7 +22,6 @@ class Solution {
                     break;
             }
         }
-
         return new int[]{x, y};
     }
 }
