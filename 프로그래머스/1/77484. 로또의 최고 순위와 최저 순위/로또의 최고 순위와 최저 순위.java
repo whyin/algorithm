@@ -1,6 +1,5 @@
 class Solution {
     public int[] solution(int[] lottos, int[] win_nums) {
-        
         int win = 0;
         int zero = 0;
 
@@ -15,10 +14,10 @@ class Solution {
                 }
             }
         }
-        
+
         int maxRank = (win + zero) >= 2 ? 7 - (win + zero) : 6;
         int minRank = win >= 2 ? 7 - win : 6;
-        
+
         return new int[]{maxRank, minRank};
     }
 }
