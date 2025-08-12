@@ -14,9 +14,7 @@ class Solution {
             int n = 0;
 
             for (int j = 0; j < photo[i].length ; j ++) {
-                if (map.containsKey(photo[i][j])) {
-                    n += map.get(photo[i][j]);
-                }
+                n += map.getOrDefault(photo[i][j], 0);
             }
             answer[i] = n;
         }
