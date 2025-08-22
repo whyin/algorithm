@@ -8,6 +8,6 @@ class Solution {
             set.add(n);
         }
         
-        return Math.min(set.size(), nums.length / 2);
+        return set.size() >= nums.length / 2 ? nums.length / 2 : set.size();
     }
 }
