@@ -5,11 +5,13 @@ class Solution {
     if (direction.equals("right")) {
         for (int i = 0; i < numbers.length; i++) {
             answer[(i + 1) % numbers.length] = numbers[i];
-        }
-    } else { // left
+        }      
+    } else {
         for (int i = 0; i < numbers.length; i++) {
             answer[i] = numbers[(i + 1) % numbers.length];
         }
+        
+        
     }
 
     return answer;
