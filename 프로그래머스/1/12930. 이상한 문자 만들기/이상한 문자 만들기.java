@@ -3,12 +3,11 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         int index = 0;
 
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-
+        for (char c : s.toCharArray()) {
             if (c == ' ') {
                 sb.append(c);
                 index = 0;
+                continue;
             } else {
                 if (index % 2 == 0) {
                     sb.append(Character.toUpperCase(c));
