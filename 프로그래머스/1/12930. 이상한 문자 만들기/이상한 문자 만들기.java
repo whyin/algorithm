@@ -9,11 +9,8 @@ class Solution {
                 index = 0;
                 continue;
             } else {
-                if (index % 2 == 0) {
-                    sb.append(Character.toUpperCase(c));
-                } else {
-                    sb.append(Character.toLowerCase(c));
-                }
+                sb.append(index % 2 == 0 ? Character.toUpperCase(c) : Character.toLowerCase(c));
+                
                 index++;
             }
         }
