@@ -1,49 +1,58 @@
-// Single(S), Double(D), Triple(T) 
 import java.util.*;
-import java.util.regex.*;
 
 class Solution {
     public int solution(String dartResult) {
-        int[] result = new int[3];
-        
-        Pattern p = Pattern.compile("(\\d+)([SDT])([*#]?)");
-        Matcher m = p.matcher(dartResult);
-        List<String[]> rounds = new ArrayList<>();
-        
-        while(m.find()) {
-            String num = m.group(1);
-            String bonus = m.group(2);
-            String option = m.group(3);
-            rounds.add(new String[]{num, bonus, option});
-        }
-        
-        for (int i = 0; i < rounds.size(); i++) {
-            String[] round = rounds.get(i);
-            
-            int num = 0;
-            int a = Integer.parseInt(round[0]);
-            
-            if (round[1].equals("S")) {
-                num += a;
-            } else if (round[1].equals("D")) {
-                num += a * a;
-            } else if (round[1].equals("T")) {
-                num += a * a * a;
-            }
-            
-            if (round[2].equals("*")) {
-                num *= 2;
-                if (i > 0) {
-                    result[i-1] *= 2; 
+        Stack<Integer> stack = new Stack<>();
+        int answer = 0;
+
+        for (int i = 0; i < dartResult.length(); i++) {
+            int temp = 0;
+
+            if (Character.isDigit(dartResult.charAt(i))) {
+                int num = dartResult.charAt(i) - '0';
+
+                if (i + 1 < dartResult.length() &&
+                        dartResult.charAt(i) == '1' &&
+                        dartResult.charAt(i + 1) == '0') {
+                    stack.add(10);
+                    i++;
+                    continue;
                 }
-            } else if (round[2].equals("#")) {
-                num = -num;
+                stack.add(num);
+                continue;
             }
-            
-            result[i] = num;
-            
+
+            if (dartResult.charAt(i) == 'S') {
+                temp = stack.pop();
+                stack.add(temp);
+
+            } else if (dartResult.charAt(i) == 'D') {
+                temp = stack.pop();
+                temp *= temp;
+                stack.add(temp);
+            } else if (dartResult.charAt(i) == 'T') {
+                temp = stack.pop();
+                temp = temp * temp * temp;
+                stack.add(temp);
+            }
+
+
+            if (dartResult.charAt(i) == '*') {
+                int cur = stack.pop() * 2;
+                if (!stack.isEmpty()) {
+                    int prev = stack.pop() * 2;
+                    stack.add(prev);
+                }
+                stack.add(cur);
+
+            } else if (dartResult.charAt(i) == '#') {
+                stack.add(-stack.pop());
+            }
         }
-        
-        return result[0] + result[1] + result[2];
+
+        for (int n : stack) {
+            answer += n;
+        }
+        return answer;
     }
 }
