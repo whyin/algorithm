@@ -3,41 +3,36 @@ import java.util.*;
 class Solution {
     public int[] solution(int N, int[] stages) {
         int[] answer = new int[N];
-        
-        int[] cnt = new int[N + 1];
-        double[] rate = new double[N + 1];
-        
-        
-        // 전체 인원
-        int len = stages.length;
-        
+        int[] challenger = new int[N + 2];
+
         for (int s : stages) {
-            if (1 <= s && s <= N) {
-                cnt[s]++;
-            }
+            challenger[s]++;
         }
-        
+
+        int totalPlayers = stages.length;
+        double[][] failArr = new double[N][2];
+
         for (int i = 1; i <= N; i++) {
-            int fail = cnt[i];
-            rate[i] = (len == 0) ? 0.0 : (double) fail / len;
-            len -= fail;
+            double failRate = 0;
+            if (totalPlayers != 0) {
+                failRate = (double) challenger[i] / totalPlayers;
+            }
+            failArr[i - 1][0] = i;
+            failArr[i - 1][1] = failRate;
+            totalPlayers -= challenger[i];
         }
         
-        
-        List<Integer> order = new ArrayList<>();
-        for (int i = 1; i <= N; i++) order.add(i);
+        Arrays.sort(
+                failArr, (a, b) -> {
+                    if (a[1] == b[1]) {
+                        return Double.compare(a[0], b[0]);
+                    }
+                    return Double.compare(b[1], a[1]);
+                });
 
-        // 실패율 내림차순, 동률이면 스테이지 번호 오름차순  
-        order.sort((a, b) -> {
-            int cmp = Double.compare(rate[b], rate[a]);
-            return (cmp != 0) ? cmp : Integer.compare(a, b);
-        });
-
-        // 정렬된 순서대로 answer 채우기
         for (int i = 0; i < N; i++) {
-            answer[i] = order.get(i);
+            answer[i] = (int) failArr[i][0];
         }
-        
         return answer;
     }
 }
